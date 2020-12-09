@@ -15,9 +15,10 @@ var stop = make(chan string)
 
 func main() {
 	group, ctx := errgroup.WithContext(context.Background())
-
+	// 启动两个服务
 	group.Go(userServer)
 	group.Go(orderServer)
+	// signal信号注册
 	signalRegister()
 
 	<-ctx.Done()
@@ -29,7 +30,7 @@ func main() {
 	}
 	close(stop)
 	time.Sleep(time.Second * 2)
-	log.Println("All server has shutdown")
+	log.Println("all server has shutdown")
 }
 
 // userServer 用户服务
