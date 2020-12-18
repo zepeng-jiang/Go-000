@@ -1,8 +1,11 @@
 package configs
 
 import (
+	"fmt"
+	"github.com/jinzhu/gorm"
 	"time"
 
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/spf13/viper"
 )
 
@@ -64,4 +67,23 @@ func InitConfig() (*Config, error) {
 	}
 
 	return Conf, nil
+}
+
+func NewDBEngine(conf *Config) (*gorm.DB, error) {
+	db, err := gorm.Open(conf.Database.DBType, fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=%s&parseTime=%t&loc=Local",
+		conf.Database.UserName,
+		conf.Database.Password,
+		conf.Database.Host,
+		conf.Database.DBName,
+		conf.Database.Charset,
+		conf.Database.ParseTime,
+	))
+	if err != nil {
+		fmt.Println("err: ", err)
+		return nil, err
+	}
+
+	db.LogMode(true)
+
+	return db, nil
 }

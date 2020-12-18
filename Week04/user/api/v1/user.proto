@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package v1;
+
+service User {
+  rpc CreateUser(UserRequest) returns (UserResponse){};
+}
+
+message UserRequest {
+  string name = 1;
+  string password = 2;
+}
+
+message UserResponse {
+  string message = 1;
+}
