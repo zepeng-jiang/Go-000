@@ -47,8 +47,6 @@ type DatabaseSetting struct {
 	TablePrefix  string
 	Charset      string
 	ParseTime    bool
-	MaxIdleConns int
-	MaxOpenConns int
 }
 
 func InitConfig() (*Config, error) {
